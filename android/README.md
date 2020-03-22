@@ -1,8 +1,6 @@
-# Native Object Detection
+# Android App
 
-This is a sample application of running object detection using TensorFlow Lite in c++
-
-It is part of [this](https://www.thecodingnotebook.com/2019/11/cross-platform-object-detection-with.html) blog post series.
+This is a sampleAndroid  application of running object detection using TensorFlow Lite in c++
 
 # Setup
 
