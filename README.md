@@ -4,7 +4,7 @@ This is a sample application of running object detection using TensorFlow Lite i
 
 It is part of [this](https://www.thecodingnotebook.com/2019/11/cross-platform-object-detection-with.html) blog post series.
 
-This repo contains sample application in Android and (still TBD iOS).
+This repo contains sample application in [Android](https://github.com/ValYouW/crossplatform-tflite-object-detecion/tree/master/android) and (still TBD iOS).
 
 ## License
 MIT
