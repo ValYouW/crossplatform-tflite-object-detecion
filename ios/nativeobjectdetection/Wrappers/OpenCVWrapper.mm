@@ -37,6 +37,27 @@ static ObjectDetector* detector = nil;
     detector = new ObjectDetector((const char*)model, size);
 }
 
+-(DetectionResult*) dect: (CMSampleBufferRef)buffer {
+    CVImageBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(buffer);
+    CVPixelBufferLockBaseAddress( pixelBuffer, 0 );
+
+    //Processing here
+    int bufferWidth = (int)CVPixelBufferGetWidth(pixelBuffer);
+    int bufferHeight = (int)CVPixelBufferGetHeight(pixelBuffer);
+    unsigned char *pixel = (unsigned char *)CVPixelBufferGetBaseAddress(pixelBuffer);
+
+    //put buffer in open cv, no memory copied
+    Mat mat = Mat(bufferHeight, bufferWidth, CV_8UC4, pixel, CVPixelBufferGetBytesPerRow(pixelBuffer));
+
+    //End processing
+    CVPixelBufferUnlockBaseAddress( pixelBuffer, 0 );
+
+    Mat src;
+    rotate(mat, src, ROTATE_90_CLOCKWISE);
+    
+    return nil;
+}
+
 -(DetectionResult*) detect: (UIImage *)image {
     if (image == nil) {
         return nil;

@@ -1,4 +1,6 @@
 #import <Foundation/Foundation.h>
+#import <CoreMedia/CoreMedia.h>
+#import <CoreVideo/CoreVideo.h>
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -12,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) initDetector;
 ;
 - (DetectionResult*) detect: (UIImage*)image;
+;
+- (DetectionResult*) dect: (CMSampleBufferRef)buffer;
 @end
 
 NS_ASSUME_NONNULL_END

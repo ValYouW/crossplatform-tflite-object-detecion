@@ -3,7 +3,7 @@ import UIKit
 
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
 
     @IBOutlet weak var cameraView: UIView!
 
@@ -13,6 +13,10 @@ class ViewController: UIViewController {
     var output: AVCaptureMetadataOutput?
     var prevLayer: AVCaptureVideoPreviewLayer?
     
+    let sampleBufferQueue = DispatchQueue.global(qos: .background)
+    var processing = false
+    let cv = OpenCVWrapper()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         verifyCameraPermissions()
@@ -21,6 +25,10 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         prevLayer?.frame.size = cameraView.frame.size
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return [.portrait]
     }
     
     func verifyCameraPermissions() {
@@ -51,63 +59,46 @@ class ViewController: UIViewController {
     
     func createSession() {
         session = AVCaptureSession()
-        device = AVCaptureDevice.default(for: AVMediaType.video)
+        session?.sessionPreset = AVCaptureSession.Preset.photo
+        device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
         
-        do{
+        do {
             input = try AVCaptureDeviceInput(device: device!)
-        }
-        catch{
+            guard input != nil else { return }
+            session?.addInput(input!)
+            
+            prevLayer = AVCaptureVideoPreviewLayer(session: session!)
+            prevLayer?.backgroundColor = UIColor.black.cgColor
+            prevLayer?.frame.size = cameraView.frame.size
+            prevLayer?.videoGravity = AVLayerVideoGravity.resizeAspect
+            
+            cameraView.layer.addSublayer(prevLayer!)
+
+            let output = AVCaptureVideoDataOutput()
+            let bufferPixelFormatKey = (kCVPixelBufferPixelFormatTypeKey as NSString) as String
+            
+            output.videoSettings = [bufferPixelFormatKey: NSNumber(value: kCVPixelFormatType_32BGRA)]
+            output.alwaysDiscardsLateVideoFrames = true
+            output.setSampleBufferDelegate(self, queue: sampleBufferQueue)
+            output.connection(with: AVMediaType.video)?.videoOrientation = .portrait
+            session?.addOutput(output)
+            
+            session?.startRunning()
+
+        } catch {
             print(error)
         }
-        
-        if let input = input{
-            session?.addInput(input)
-        }
-        
-        prevLayer = AVCaptureVideoPreviewLayer(session: session!)
-        prevLayer?.frame.size = cameraView.frame.size
-        prevLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        
-        prevLayer?.connection?.videoOrientation = transformOrientation(orientation: UIInterfaceOrientation(rawValue: UIApplication.shared.windows.first?.windowScene?.interfaceOrientation.rawValue ?? UIInterfaceOrientation.portrait.rawValue)!)
-        
-        cameraView.layer.addSublayer(prevLayer!)
-        
-        session?.startRunning()
-    }
-
-    func cameraWithPosition(position: AVCaptureDevice.Position) -> AVCaptureDevice? {
-        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera, .builtInTelephotoCamera, .builtInTrueDepthCamera, .builtInWideAngleCamera, ], mediaType: .video, position: position)
-        
-        if let device = deviceDiscoverySession.devices.first {
-            return device
-        }
-        return nil
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { (context) -> Void in
-            self.prevLayer?.connection?.videoOrientation = self.transformOrientation(orientation: UIInterfaceOrientation(rawValue: UIApplication.shared.windows.first?.windowScene?.interfaceOrientation.rawValue ?? UIInterfaceOrientation.portrait.rawValue)!)
-            self.prevLayer?.frame.size = self.cameraView.frame.size
-        }, completion: { (context) -> Void in
-            
-        })
-        super.viewWillTransition(to: size, with: coordinator)
-    }
-    
-    func transformOrientation(orientation: UIInterfaceOrientation) -> AVCaptureVideoOrientation {
-        switch orientation {
-        case .landscapeLeft:
-            return .landscapeLeft
-        case .landscapeRight:
-            return .landscapeRight
-        case .portraitUpsideDown:
-            return .portraitUpsideDown
-        default:
-            return .portrait
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        if (processing) {
+            return
         }
+
+        processing = true
+        
+        let res = cv.dect(sampleBuffer)
+        
+        processing = false
     }
-
-    
-
 }
-
