@@ -1,0 +1,449 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		228C5661AF699AD7DAC89CE5 /* Pods_nativeobjectdetection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 451E3A64BDBE97BAB73E8F8F /* Pods_nativeobjectdetection.framework */; };
+		7E31528B244B493B00463AD6 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E31528A244B493B00463AD6 /* Accelerate.framework */; };
+		7EF78F62244A452600508619 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF78F61244A452600508619 /* AppDelegate.swift */; };
+		7EF78F64244A452600508619 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF78F63244A452600508619 /* SceneDelegate.swift */; };
+		7EF78F66244A452600508619 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF78F65244A452600508619 /* ViewController.swift */; };
+		7EF78F69244A452600508619 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EF78F67244A452600508619 /* Main.storyboard */; };
+		7EF78F6B244A452A00508619 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EF78F6A244A452A00508619 /* Assets.xcassets */; };
+		7EF78F6E244A452A00508619 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EF78F6C244A452A00508619 /* LaunchScreen.storyboard */; };
+		7EF78F7A244A4C5200508619 /* OpenCVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7EF78F79244A4C5200508619 /* OpenCVWrapper.mm */; };
+		7EF78F7E244B42EA00508619 /* ObjectDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EF78F7C244B42EA00508619 /* ObjectDetector.cpp */; };
+		7EF78F80244B434900508619 /* libtensorflow-lite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF78F7F244B434900508619 /* libtensorflow-lite.a */; };
+		7EF78F83244B437200508619 /* detect.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 7EF78F81244B437200508619 /* detect.tflite */; };
+		7EF78F84244B437200508619 /* labelmap.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EF78F82244B437200508619 /* labelmap.txt */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		451E3A64BDBE97BAB73E8F8F /* Pods_nativeobjectdetection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nativeobjectdetection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E31528A244B493B00463AD6 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		7EF78F5E244A452600508619 /* nativeobjectdetection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nativeobjectdetection.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EF78F61244A452600508619 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7EF78F63244A452600508619 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		7EF78F65244A452600508619 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7EF78F68244A452600508619 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7EF78F6A244A452A00508619 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7EF78F6D244A452A00508619 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7EF78F6F244A452A00508619 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7EF78F77244A4BF800508619 /* OpenCVWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenCVWrapper.h; sourceTree = "<group>"; };
+		7EF78F78244A4C5200508619 /* nativeobjectdetection-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "nativeobjectdetection-Bridging-Header.h"; sourceTree = "<group>"; };
+		7EF78F79244A4C5200508619 /* OpenCVWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVWrapper.mm; sourceTree = "<group>"; };
+		7EF78F7C244B42EA00508619 /* ObjectDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObjectDetector.cpp; path = "../../../native-detector/ObjectDetector.cpp"; sourceTree = "<group>"; };
+		7EF78F7D244B42EA00508619 /* ObjectDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectDetector.h; path = "../../../native-detector/ObjectDetector.h"; sourceTree = "<group>"; };
+		7EF78F7F244B434900508619 /* libtensorflow-lite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libtensorflow-lite.a"; path = "../tflite-dist/libs/ios/libtensorflow-lite.a"; sourceTree = "<group>"; };
+		7EF78F81244B437200508619 /* detect.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; name = detect.tflite; path = "../tflite-models/detect.tflite"; sourceTree = "<group>"; };
+		7EF78F82244B437200508619 /* labelmap.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = labelmap.txt; path = "../tflite-models/labelmap.txt"; sourceTree = "<group>"; };
+		9E126AD1ED1A2ECBB6B417C5 /* Pods-nativeobjectdetection.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nativeobjectdetection.debug.xcconfig"; path = "Target Support Files/Pods-nativeobjectdetection/Pods-nativeobjectdetection.debug.xcconfig"; sourceTree = "<group>"; };
+		B04CAB10E70321A063209864 /* Pods-nativeobjectdetection.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nativeobjectdetection.release.xcconfig"; path = "Target Support Files/Pods-nativeobjectdetection/Pods-nativeobjectdetection.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7EF78F5B244A452600508619 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E31528B244B493B00463AD6 /* Accelerate.framework in Frameworks */,
+				7EF78F80244B434900508619 /* libtensorflow-lite.a in Frameworks */,
+				228C5661AF699AD7DAC89CE5 /* Pods_nativeobjectdetection.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7EF78F55244A452600508619 = {
+			isa = PBXGroup;
+			children = (
+				7EF78F81244B437200508619 /* detect.tflite */,
+				7EF78F82244B437200508619 /* labelmap.txt */,
+				7EF78F60244A452600508619 /* nativeobjectdetection */,
+				7EF78F5F244A452600508619 /* Products */,
+				C000B4347AE7FBE764EDA33E /* Pods */,
+				A326E19512C100E3E37135E7 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		7EF78F5F244A452600508619 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7EF78F5E244A452600508619 /* nativeobjectdetection.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7EF78F60244A452600508619 /* nativeobjectdetection */ = {
+			isa = PBXGroup;
+			children = (
+				7EF78F76244A4B5E00508619 /* Wrappers */,
+				7EF78F61244A452600508619 /* AppDelegate.swift */,
+				7EF78F63244A452600508619 /* SceneDelegate.swift */,
+				7EF78F65244A452600508619 /* ViewController.swift */,
+				7EF78F67244A452600508619 /* Main.storyboard */,
+				7EF78F6A244A452A00508619 /* Assets.xcassets */,
+				7EF78F6C244A452A00508619 /* LaunchScreen.storyboard */,
+				7EF78F6F244A452A00508619 /* Info.plist */,
+			);
+			path = nativeobjectdetection;
+			sourceTree = "<group>";
+		};
+		7EF78F76244A4B5E00508619 /* Wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				7EF78F7C244B42EA00508619 /* ObjectDetector.cpp */,
+				7EF78F7D244B42EA00508619 /* ObjectDetector.h */,
+				7EF78F77244A4BF800508619 /* OpenCVWrapper.h */,
+				7EF78F79244A4C5200508619 /* OpenCVWrapper.mm */,
+				7EF78F78244A4C5200508619 /* nativeobjectdetection-Bridging-Header.h */,
+			);
+			path = Wrappers;
+			sourceTree = "<group>";
+		};
+		A326E19512C100E3E37135E7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7E31528A244B493B00463AD6 /* Accelerate.framework */,
+				7EF78F7F244B434900508619 /* libtensorflow-lite.a */,
+				451E3A64BDBE97BAB73E8F8F /* Pods_nativeobjectdetection.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C000B4347AE7FBE764EDA33E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9E126AD1ED1A2ECBB6B417C5 /* Pods-nativeobjectdetection.debug.xcconfig */,
+				B04CAB10E70321A063209864 /* Pods-nativeobjectdetection.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7EF78F5D244A452600508619 /* nativeobjectdetection */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7EF78F72244A452A00508619 /* Build configuration list for PBXNativeTarget "nativeobjectdetection" */;
+			buildPhases = (
+				605B8D3D607200A725CDAB3E /* [CP] Check Pods Manifest.lock */,
+				7EF78F5A244A452600508619 /* Sources */,
+				7EF78F5B244A452600508619 /* Frameworks */,
+				7EF78F5C244A452600508619 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = nativeobjectdetection;
+			productName = nativeobjectdetection;
+			productReference = 7EF78F5E244A452600508619 /* nativeobjectdetection.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7EF78F56244A452600508619 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = Yuval;
+				TargetAttributes = {
+					7EF78F5D244A452600508619 = {
+						CreatedOnToolsVersion = 11.4;
+						LastSwiftMigration = 1140;
+					};
+				};
+			};
+			buildConfigurationList = 7EF78F59244A452600508619 /* Build configuration list for PBXProject "nativeobjectdetection" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7EF78F55244A452600508619;
+			productRefGroup = 7EF78F5F244A452600508619 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7EF78F5D244A452600508619 /* nativeobjectdetection */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7EF78F5C244A452600508619 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EF78F83244B437200508619 /* detect.tflite in Resources */,
+				7EF78F84244B437200508619 /* labelmap.txt in Resources */,
+				7EF78F6E244A452A00508619 /* LaunchScreen.storyboard in Resources */,
+				7EF78F6B244A452A00508619 /* Assets.xcassets in Resources */,
+				7EF78F69244A452600508619 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		605B8D3D607200A725CDAB3E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-nativeobjectdetection-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7EF78F5A244A452600508619 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EF78F66244A452600508619 /* ViewController.swift in Sources */,
+				7EF78F62244A452600508619 /* AppDelegate.swift in Sources */,
+				7EF78F7E244B42EA00508619 /* ObjectDetector.cpp in Sources */,
+				7EF78F7A244A4C5200508619 /* OpenCVWrapper.mm in Sources */,
+				7EF78F64244A452600508619 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7EF78F67244A452600508619 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7EF78F68244A452600508619 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		7EF78F6C244A452A00508619 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7EF78F6D244A452A00508619 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7EF78F70244A452A00508619 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7EF78F71244A452A00508619 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7EF78F73244A452A00508619 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9E126AD1ED1A2ECBB6B417C5 /* Pods-nativeobjectdetection.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KG86WG3X2K;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../tflite-dist/include",
+					"$(PROJECT_DIR)/../native-detector",
+				);
+				INFOPLIST_FILE = nativeobjectdetection/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "$(PROJET_DIR)../tflite-dist/libs/ios";
+				PRODUCT_BUNDLE_IDENTIFIER = com.vyw.nativeobjectdetection;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "nativeobjectdetection/Wrappers/nativeobjectdetection-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		7EF78F74244A452A00508619 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B04CAB10E70321A063209864 /* Pods-nativeobjectdetection.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KG86WG3X2K;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../tflite-dist/include",
+					"$(PROJECT_DIR)/../native-detector",
+				);
+				INFOPLIST_FILE = nativeobjectdetection/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "$(PROJET_DIR)../tflite-dist/libs/ios";
+				PRODUCT_BUNDLE_IDENTIFIER = com.vyw.nativeobjectdetection;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "nativeobjectdetection/Wrappers/nativeobjectdetection-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7EF78F59244A452600508619 /* Build configuration list for PBXProject "nativeobjectdetection" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7EF78F70244A452A00508619 /* Debug */,
+				7EF78F71244A452A00508619 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7EF78F72244A452A00508619 /* Build configuration list for PBXNativeTarget "nativeobjectdetection" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7EF78F73244A452A00508619 /* Debug */,
+				7EF78F74244A452A00508619 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7EF78F56244A452600508619 /* Project object */;
+}
