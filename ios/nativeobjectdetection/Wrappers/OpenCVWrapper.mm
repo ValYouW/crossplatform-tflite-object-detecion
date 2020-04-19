@@ -28,16 +28,14 @@ static ObjectDetector* detector = nil;
     if (!data) {
       NSLog(@"Failed to load model: %@", configLoadError);
     } else {
-        // ios might release the memory of "data" (NSData) and we don't want that to happen, so we copy and take responsibility for that memory
         size = data.length;
-        model = (char*)malloc(sizeof(char) * size);
-        memcpy(model, (char*)data.bytes, sizeof(char) * size);
+        model = (char*)data.bytes;
     }
 
-    detector = new ObjectDetector((const char*)model, size);
+    detector = new ObjectDetector((const char*)model, size, true);
 }
 
--(DetectionResult*) dect: (CMSampleBufferRef)buffer {
+-(NSArray*) detect: (CMSampleBufferRef)buffer {
     CVImageBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(buffer);
     CVPixelBufferLockBaseAddress( pixelBuffer, 0 );
 
@@ -52,36 +50,36 @@ static ObjectDetector* detector = nil;
     //End processing
     CVPixelBufferUnlockBaseAddress( pixelBuffer, 0 );
 
-    Mat src;
-    rotate(mat, src, ROTATE_90_CLOCKWISE);
-    
-    return nil;
-}
-
--(DetectionResult*) detect: (UIImage *)image {
-    if (image == nil) {
-        return nil;
-    }
-
     Mat dst;
-    UIImageToMat(image, dst);
-    cvtColor(dst, dst, COLOR_RGBA2BGRA);
+    // In our sample we know we limit to portrait, in real-world the rotation can be a parameter to this func
+    rotate(mat, dst, ROTATE_90_CLOCKWISE);
     
     [self initDetector];
     
     DetectResult* detections = detector->detect(dst);
-    
-    DetectionResult* res = [DetectionResult new];
-    res.count = detector->DETECT_NUM;
 
-    NSMutableArray<NSValue*>* resArray = [NSMutableArray<NSValue*> new];
+    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity: (detector->DETECT_NUM * 6)];
 
+//    DetectionResult* res = [DetectionResult new];
+//    res.count = detector->DETECT_NUM;
+//
+//    NSMutableArray<NSValue*>* resArray = [NSMutableArray<NSValue*> new];
+//
     for (int i = 0; i < detector->DETECT_NUM; ++i) {
-        [resArray addObject: [NSValue value:&detections[i] withObjCType:@encode(DetectResult)]];
+        [array addObject:[NSNumber numberWithFloat:detections[i].label]];
+        [array addObject:[NSNumber numberWithFloat:detections[i].score]];
+        [array addObject:[NSNumber numberWithFloat:detections[i].xmin]];
+        [array addObject:[NSNumber numberWithFloat:detections[i].xmax]];
+        [array addObject:[NSNumber numberWithFloat:detections[i].ymin]];
+        [array addObject:[NSNumber numberWithFloat:detections[i].ymax]];
+        
+//        [resArray addObject: [NSValue value:&detections[i] withObjCType:@encode(DetectResult)]];
     }
+//
+//    res.detections = (NSArray<NSValue*>*)[resArray copy];
+//    return res;
     
-    res.detections = (NSArray<NSValue*>*)[resArray copy];
-    return res;
+    return array;
 }
 
 @end
