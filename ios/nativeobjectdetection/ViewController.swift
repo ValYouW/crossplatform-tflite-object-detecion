@@ -1,8 +1,6 @@
 import AVFoundation
 import UIKit
 
-
-
 class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
 
     @IBOutlet weak var cameraView: UIView!
@@ -16,19 +14,20 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     let sampleBufferQueue = DispatchQueue.global(qos: .background)
     var processing = false
     let cv = OpenCVWrapper()
-    let canvas = Canvas()
+    let detectionsCanvas = DetectionsCanvas()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        canvas.isOpaque = false
-        view.addSubview(canvas)
+        detectionsCanvas.isOpaque = false
+        view.addSubview(detectionsCanvas)
+        detectionsCanvas.labelmap = loadLabels()
         verifyCameraPermissions()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         prevLayer?.frame.size = cameraView.frame.size
-        canvas.frame = view.frame
+        detectionsCanvas.frame = cameraView.frame
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -84,8 +83,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             output.videoSettings = [bufferPixelFormatKey: NSNumber(value: kCVPixelFormatType_32BGRA)]
             output.alwaysDiscardsLateVideoFrames = true
             output.setSampleBufferDelegate(self, queue: sampleBufferQueue)
-            output.connection(with: AVMediaType.video)?.videoOrientation = .portrait
             session?.addOutput(output)
+            output.connection(with: AVMediaType.video)?.videoOrientation = .portrait // MUST be after session.addOutput
             
             session?.startRunning()
 
@@ -98,6 +97,19 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         if (processing) {
             return
         }
+        
+        // On first frame save the frame witdth/height
+        if (detectionsCanvas.capFrameWidth == 0) {
+            guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+                return
+            }
+            
+            CVPixelBufferLockBaseAddress( pixelBuffer, .readOnly )
+            detectionsCanvas.capFrameWidth = CVPixelBufferGetWidth(pixelBuffer)
+            detectionsCanvas.capFrameHeight = CVPixelBufferGetHeight(pixelBuffer)
+            CVPixelBufferUnlockBaseAddress( pixelBuffer, .readOnly )
+            return
+        }
 
         processing = true
 
@@ -106,37 +118,72 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         let span = DispatchTime.now().uptimeNanoseconds - start
         print("Detection time: \(span / 1000000) msec")
 
-        canvas.detections = res.compactMap {($0 as! Float)}
+        // Convert results to Float and set it for drawing on the canvas
+        detectionsCanvas.detections = res.compactMap {($0 as! Float)}
 
         DispatchQueue.main.async { [weak self] in
-            self!.canvas.setNeedsDisplay()
+            self!.detectionsCanvas.setNeedsDisplay()
             self!.processing = false
         }
     }
+    
+    func loadLabels() -> [String] {
+        var res = [String]()
+        if let filepath = Bundle.main.path(forResource: "labelmap", ofType: "txt") {
+            do {
+                let contents = try String(contentsOfFile: filepath)
+                res = contents.split { $0.isNewline }.map(String.init)
+            } catch {
+                print("Error loading labelmap.txt file")
+            }
+        }
+        
+        return res
+    }
 }
 
-class Canvas: UIView {
-    var detections = [Float]()
+// Used to draw detection rectangles on screen
+class DetectionsCanvas: UIView {
+    var labelmap = [String]()
+    var detections = [Float]() // Raw results from detector
+
+    // The size of the image we run detection on
+    var capFrameWidth = 0
+    var capFrameHeight = 0
     
     override func draw(_ rect: CGRect) {
-        guard let context = UIGraphicsGetCurrentContext() else {return}
         if (detections.count < 1) {return}
+        if (detections.count % 6 > 0) {return;} // Each detection should have 6 numbers (classId, scrore, xmin, xmax, ymin, ymax)
+
+        guard let context = UIGraphicsGetCurrentContext() else {return}
         context.clear(self.frame)
 
-        if (detections.count % 6 > 0) {return;}
+        // detection coords are in frame coord system, convert to screen coords
+        let scaleX = self.frame.size.width / CGFloat(capFrameWidth)
+        let scaleY = self.frame.size.height / CGFloat(capFrameHeight)
 
+        // The camera view offset on screen
+        let xoff = self.frame.minX
+        let yoff = self.frame.minY
+        
         let count = detections.count / 6
         for i in 0..<count {
             let idx = i * 6
-            let label = detections[idx].description
+            let classId = Int(detections[idx])
             let score = detections[idx + 1]
             if (score < 0.6) {continue}
             
-            let xmin = CGFloat(detections[idx + 2])
-            let xmax = CGFloat(detections[idx + 3])
-            let ymin = CGFloat(detections[idx + 4])
-            let ymax = CGFloat(detections[idx + 5])
+            let xmin = xoff + CGFloat(detections[idx + 2]) * scaleX
+            let xmax = xoff + CGFloat(detections[idx + 3]) * scaleX
+            let ymin = yoff + CGFloat(detections[idx + 4]) * scaleY
+            let ymax = yoff + CGFloat(detections[idx + 5]) * scaleY
             
+            // SSD Mobilenet Model assumes class 0 is background class and detection result class
+            // are zero-based (meaning class id 0 is class 1)
+            let labelIdx = classId + 1
+            let label = labelmap.count > labelIdx ? labelmap[labelIdx] : classId.description
+
+            // Draw rect
             context.beginPath()
             context.move(to: CGPoint(x: xmin, y: ymin))
             context.addLine(to: CGPoint(x: xmax, y: ymin))
@@ -148,6 +195,7 @@ class Canvas: UIView {
             context.setStrokeColor(UIColor.red.cgColor)
             context.drawPath(using: .stroke)
 
+            // Draw label
             UIGraphicsPushContext(context)
             let font = UIFont.systemFont(ofSize: 30)
             let string = NSAttributedString(string: label, attributes: [NSAttributedString.Key.font: font, NSAttributedString.Key.foregroundColor: UIColor.red])

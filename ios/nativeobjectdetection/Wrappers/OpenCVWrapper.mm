@@ -45,26 +45,19 @@ static ObjectDetector* detector = nil;
     unsigned char *pixel = (unsigned char *)CVPixelBufferGetBaseAddress(pixelBuffer);
 
     //put buffer in open cv, no memory copied
-    Mat mat = Mat(bufferHeight, bufferWidth, CV_8UC4, pixel, CVPixelBufferGetBytesPerRow(pixelBuffer));
+    Mat dst = Mat(bufferHeight, bufferWidth, CV_8UC4, pixel, CVPixelBufferGetBytesPerRow(pixelBuffer));
 
     //End processing
     CVPixelBufferUnlockBaseAddress( pixelBuffer, 0 );
 
-    Mat dst;
-    // In our sample we know we limit to portrait, in real-world the rotation can be a parameter to this func
-    rotate(mat, dst, ROTATE_90_CLOCKWISE);
-    
     [self initDetector];
     
+    // Run detections
     DetectResult* detections = detector->detect(dst);
 
+    // decode detections into float array
     NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity: (detector->DETECT_NUM * 6)];
 
-//    DetectionResult* res = [DetectionResult new];
-//    res.count = detector->DETECT_NUM;
-//
-//    NSMutableArray<NSValue*>* resArray = [NSMutableArray<NSValue*> new];
-//
     for (int i = 0; i < detector->DETECT_NUM; ++i) {
         [array addObject:[NSNumber numberWithFloat:detections[i].label]];
         [array addObject:[NSNumber numberWithFloat:detections[i].score]];
@@ -72,12 +65,7 @@ static ObjectDetector* detector = nil;
         [array addObject:[NSNumber numberWithFloat:detections[i].xmax]];
         [array addObject:[NSNumber numberWithFloat:detections[i].ymin]];
         [array addObject:[NSNumber numberWithFloat:detections[i].ymax]];
-        
-//        [resArray addObject: [NSValue value:&detections[i] withObjCType:@encode(DetectResult)]];
     }
-//
-//    res.detections = (NSArray<NSValue*>*)[resArray copy];
-//    return res;
     
     return array;
 }
