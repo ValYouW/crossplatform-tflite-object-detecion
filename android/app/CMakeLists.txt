@@ -6,7 +6,7 @@ set(OpenCV_DIR $ENV{OPENCV_ANDROID}/sdk/native/jni)
 find_package(OpenCV REQUIRED)
 
 # Add tensorflowlite lib
-set(Tensorflowlite_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../tflite-dist)
+set(Tensorflowlite_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../tflite-dist)
 add_library(libtensorflowlite SHARED IMPORTED)
 set_target_properties(libtensorflowlite PROPERTIES IMPORTED_LOCATION ${Tensorflowlite_DIR}/libs/android/${ANDROID_ABI}/libtensorflowlite.so)
 

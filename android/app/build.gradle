@@ -24,7 +24,7 @@ android {
     sourceSets {
         main {
             jni.srcDirs = []
-            jniLibs.srcDirs = ["../tflite-dist/libs/android"]
+            jniLibs.srcDirs = ["../../tflite-dist/libs/android"]
             assets.srcDirs = ["../../tflite-models"]
         }
     }
