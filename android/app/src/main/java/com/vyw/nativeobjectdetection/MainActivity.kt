@@ -62,13 +62,6 @@ class MainActivity : AppCompatActivity() {
 			this.frameHeight = frame.size.height
 		}
 
-//        var out = ByteArrayOutputStream()
-//        val yuvImage = YuvImage(frame.getData(), ImageFormat.NV21, frame.size.width, frame.size.height, null)
-//        yuvImage.compressToJpeg(Rect(0, 0, frame.size.width, frame.size.height), 85, out)
-//        val img = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.size())
-
-		// Log.w(TAG, "Frame: ${frame.size.width}X${frame.size.height}  Rotation: ${frame.rotationToUser}")
-
 		val res = detect(
 			this.detectorAddr,
 			frame.getData(),
@@ -101,7 +94,7 @@ class MainActivity : AppCompatActivity() {
 		val score = detectionsArr[detectionIdx * 6 + 1]
 		if (score < 0.6) return
 
-		// Get the frame width, since we know we display rectangle this is also the height
+		// Get the frame dimensions
 		val w = if (rotation == 0 || rotation == 180) this.frameWidth else this.frameHeight
 		val h = if (rotation == 0 || rotation == 180) this.frameHeight else this.frameWidth
 

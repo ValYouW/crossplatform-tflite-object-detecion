@@ -19,13 +19,14 @@ add_library(
 	SHARED
 
 	# Provides a relative path to your source file(s).
-	src/main/cpp/ObjectDetector.cpp
+	../../native-detector/ObjectDetector.cpp
 	src/main/cpp/native-lib.cpp
 )
 
 # add extra include directories
 target_include_directories(
 	native-lib PRIVATE
+	../../native-detector
 	${Tensorflowlite_DIR}/include
 )
 
