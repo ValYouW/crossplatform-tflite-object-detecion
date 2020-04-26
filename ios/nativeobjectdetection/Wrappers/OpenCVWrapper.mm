@@ -9,9 +9,6 @@ using namespace cv;
 
 static ObjectDetector* detector = nil;
 
-@implementation DetectionResult
-@end
-
 @implementation OpenCVWrapper
 
 - (void) initDetector {

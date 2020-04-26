@@ -5,11 +5,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DetectionResult : NSObject
-    @property (nonatomic, retain) NSArray<NSValue*>* detections;
-    @property (nonatomic, assign) int count;
-@end
-
 @interface OpenCVWrapper : NSObject
 - (void) initDetector;
 ;
